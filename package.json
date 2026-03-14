@@ -1,0 +1,16 @@
+{
+  "name": "tug-technical-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wellness Platform Monorepo",
+  "workspaces": [
+    "wellness-core-backend",
+    "wellness-admin"
+  ],
+  "scripts": {
+    "dev:backend": "npm run start:dev --workspace=wellness-core-backend",
+    "dev:admin": "npm run dev --workspace=wellness-admin",
+    "build:backend": "npm run build --workspace=wellness-core-backend",
+    "build:admin": "npm run build --workspace=wellness-admin"
+  }
+}

@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage/
+
+# Flutter
+wellness-app/.dart_tool/
+wellness-app/.packages
+wellness-app/build/
+wellness-app/.flutter-plugins
+wellness-app/.flutter-plugins-dependencies
+wellness-app/android/.gradle/
+wellness-app/ios/Pods/
+wellness-app/ios/.symlinks/
+wellness-app/pubspec.lock
+*.iml
