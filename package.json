@@ -8,14 +8,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:backend": "npm run start:dev --workspace=wellness-core-backend",
-    "dev:admin": "npm run dev --workspace=wellness-admin",
+    "dev:backend": "npm run start:dev --workspace=backend",
+    "dev:admin": "npm run dev --workspace=admin-portal",
     "build:shared": "npm run build --workspace=@wellness/shared-typescript",
-    "build:backend": "npm run build --workspace=wellness-core-backend",
-    "build:admin": "npm run build --workspace=wellness-admin",
+    "build:backend": "npm run build --workspace=backend",
+    "build:admin": "npm run build --workspace=admin-portal",
     "build:all": "npm run build:shared && npm run build:backend && npm run build:admin",
-    "drizzle:generate": "npm run drizzle:generate --workspace=wellness-core-backend",
-    "drizzle:push": "npm run drizzle:push --workspace=wellness-core-backend",
+    "drizzle:generate": "npm run drizzle:generate --workspace=backend",
+    "drizzle:push": "npm run drizzle:push --workspace=backend",
     "docker:dev": "docker-compose -f docker-compose.dev.yml up"
   },
   "dependencies": {

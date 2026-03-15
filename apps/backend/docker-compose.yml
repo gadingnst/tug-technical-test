@@ -1,9 +1,9 @@
 services:
   app:
-    image: wellness-core-backend
+    image: backend
     build:
       context: ../../ # Requires running docker-compose build from the context of this file, or better yet, building via the sh script first.
-      dockerfile: apps/wellness-core-backend/Dockerfile
+      dockerfile: apps/backend/Dockerfile
     ports:
       - "9100:9100"
     networks:

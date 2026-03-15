@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 COPY packages ./packages
-COPY apps/wellness-admin ./apps/wellness-admin
+COPY apps/admin-portal ./apps/admin-portal
 
 # Install dependencies for the whole workspace
 RUN npm ci
@@ -20,7 +20,7 @@ RUN npm run build:admin
 FROM nginx:alpine AS runner
 
 # Copy the built Vite static files into Nginx's HTML directory
-COPY --from=builder /usr/src/app/apps/wellness-admin/dist /usr/share/nginx/html
+COPY --from=builder /usr/src/app/apps/admin-portal/dist /usr/share/nginx/html
 
 # Expose port 80 (nginx default)
 EXPOSE 80

@@ -1,81 +1,43 @@
 # Wellness Platform Monorepo
 
-This monorepo contains three projects for the Wellness platform.
+Welcome to the Wellness Platform. This repository is a full-stack monorepo containing our backend services, admin dashboard, and mobile application.
 
-## Structure
+## 📚 Documentation Hub
 
-```
-tug-technical-test/
-├── apps/
-│   ├── wellness-core-backend/    # NestJS + Drizzle ORM + PostgreSQL
-│   ├── wellness-admin/           # React + Vite + TanStack Router
-│   └── wellness-app/             # Flutter
-├── packages/
-│   └── shared-typescript/        # Zod schemas + TS types
-└── package.json                  # npm workspaces root
-```
+We have organized our documentation into focused modules to help you get started quickly:
 
-## Getting Started
+- 🏗️ **[Project Structure](docs/STRUCTURE.md)**: Overview of the monorepo layout and components.
+- ⚙️ **[Setup Instructions](docs/SETUP.md)**: How to get the project running locally and with Docker.
+- 🏛️ **[Architectural Decisions](docs/ARCHITECTURE.md)**: Our technology stack and design patterns.
+- 🔌 **[API Design](docs/API.md)**: Standardized response formats and authentication details.
+- 🧠 **[Assumptions Made](docs/ASSUMPTIONS.md)**: Decisions made during development.
+- 🐳 **[Docker Guide](docs/DOCKER.md)**: Deep dive into containerization and deployment.
+- 🔐 **[Auth & Guards](docs/AUTH.md)**: Details on security and identity management.
+
+## 🚀 Quick Start
+
+If you're already familiar with the stack, here's the "cheat sheet":
 
 ```bash
-# Install all dependencies
+# 1. Install
 npm install
 
-# Build shared package (required before backend/admin)
+# 2. Build Core
 npm run build:shared
 
-# Build everything
-npm run build:all
+# 3. Development
+npm run dev:backend   # API on port 9100
+npm run dev:admin     # Admin UI on port 3001
 ```
 
-## Development
-
-```bash
-# Backend (NestJS on port 9100)
-npm run dev:backend
-
-# Admin Panel (Vite on port 3001)
-npm run dev:admin
-
-# Flutter App
-cd apps/wellness-app && flutter pub get && flutter run
-```
-
-## Docker
-
-For running the stack in Docker, please refer to the comprehensive guide:
-👉 **[Docker Setup & Deployment Guide](docs/DOCKER.md)**
-
-For details on the authentication module and admin access:
-👉 **[Authentication & Guarding Details](docs/AUTH.md)**
-
-To start development environment with **Hot Reload**:
+For a more robust experience (including hot-reload without local Node dependencies), run:
 ```bash
 npm run docker:dev
 ```
 
-## Database
+## 🛠️ Tech Stack Highlights
 
-```bash
-# Push Drizzle schema to DB
-cd apps/wellness-core-backend
-npm run drizzle:push
-
-# Generate migration
-npm run drizzle:generate
-
-# Run migrations
-npm run drizzle:migrate
-
-# Seed initial Super Admin
-npm run seed:admin
-```
-
-## API Endpoints
-
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/admin/packages` | List all wellness packages |
-| POST | `/admin/packages` | Create a wellness package |
-| PUT | `/admin/packages/:id` | Update a wellness package |
-| DELETE | `/admin/packages/:id` | Delete a wellness package |
+- **Backend**: NestJS, Drizzle ORM, PostgreSQL, Better Auth.
+- **Frontend**: React, TanStack (Router, Query), Vite, Tailwind CSS.
+- **Mobile**: Flutter.
+- **Shared**: Zod-based schemas for end-to-end type safety.

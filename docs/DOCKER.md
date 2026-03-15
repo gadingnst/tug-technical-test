@@ -55,24 +55,24 @@ We have provided dedicated shell scripts to handle isolated builds. These script
 From the root directory, execute:
 
 ```bash
-./apps/wellness-core-backend/build-docker-image.sh
+./apps/backend/build-docker-image.sh
 ```
-*Result: Builds the `wellness-core-backend` Docker image exposing port 9100.*
+*Result: Builds the `backend` Docker image exposing port 9100.*
 
 #### Building the Admin Frontend Image
 From the root directory, execute:
 
 ```bash
-./apps/wellness-admin/build-docker-image.sh
+./apps/admin-portal/build-docker-image.sh
 ```
-*Result: Builds the `wellness-admin` Docker image using Nginx exposing port 80.*
+*Result: Builds the `admin-portal` Docker image using Nginx exposing port 80.*
 
 ### Production Deployment Strategy
 
 Once the images are built via these isolated scripts, they no longer rely on the monorepo structure. You can deploy them as standard standalone containers.
 
 1. **Container Registry**: Tag the generated images and push them to your preferred registry (Docker Hub, AWS ECR, GCP Artifact Registry).
-2. **Deploying the Backend**: Run the `wellness-core-backend` container on your backend infrastructure. Make sure to pass production environment variables directly to the container (`DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`). 
-3. **Deploying the Frontend**: Run the `wellness-admin` container on your web infrastructure. It runs a lightweight Nginx server and exposes port `80` by default.
+2. **Deploying the Backend**: Run the `backend` container on your backend infrastructure. Make sure to pass production environment variables directly to the container (`DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`). 
+3. **Deploying the Frontend**: Run the `admin-portal` container on your web infrastructure. It runs a lightweight Nginx server and exposes port `80` by default.
 
 Because they are fully decoupled, you can now scale, update, and manage the deployment of your frontend separately from your backend.

@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 COPY packages ./packages
-COPY apps/wellness-core-backend ./apps/wellness-core-backend
+COPY apps/backend ./apps/backend
 
 # Install dependencies for the whole workspace
 RUN npm ci
@@ -26,16 +26,16 @@ ENV NODE_ENV=production
 # Copy package files
 COPY package*.json ./
 COPY packages ./packages
-COPY apps/wellness-core-backend/package.json ./apps/wellness-core-backend/
+COPY apps/backend/package.json ./apps/backend/
 
 # Install only production dependencies
 RUN npm ci --omit=dev
 
 # Copy the built artifacts from the builder
 COPY --from=builder /usr/src/app/packages ./packages
-COPY --from=builder /usr/src/app/apps/wellness-core-backend/dist ./apps/wellness-core-backend/dist
+COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 
-WORKDIR /usr/src/app/apps/wellness-core-backend
+WORKDIR /usr/src/app/apps/backend
 
 EXPOSE 9100
 
