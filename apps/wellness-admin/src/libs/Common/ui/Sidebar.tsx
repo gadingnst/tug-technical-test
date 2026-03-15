@@ -1,6 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 import { authClient } from '../api/auth';
-import { LogOut, Users, Package, Activity } from 'lucide-react';
+import { LogOut, Users, Package, Activity, Settings } from 'lucide-react';
 
 export function Sidebar() {
   const navigate = useNavigate();
@@ -49,7 +49,18 @@ export function Sidebar() {
         </Link>
       </nav>
 
-      <div className="p-4 border-t border-slate-800/50">
+      <div className="p-4 border-t border-slate-800/50 space-y-2">
+        <Link
+          to="/settings"
+          className="flex items-center gap-3 px-3 py-3 w-full rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all group"
+          activeProps={{
+            className: 'bg-slate-800 text-white font-medium',
+          }}
+        >
+          <Settings className="w-5 h-5 transition-transform group-hover:rotate-45" />
+          <span className="font-medium">Settings</span>
+        </Link>
+
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-3 w-full rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all group"

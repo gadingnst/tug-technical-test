@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { signIn, signOut, useSession } from "@/libs/Common/api/auth"
+import { signIn, signOut, useSession, authClient } from "@/libs/Common/api/auth"
 import type { LoginInput } from "@wellness/shared-typescript"
 
 export const useAuth = () => {
@@ -33,12 +33,27 @@ export const useAuth = () => {
     }
   })
 
+  const { mutateAsync: changePassword, isPending: isChangingPassword, error: changePasswordError } = useMutation({
+    mutationFn: async (data: { currentPassword: string; newPassword: string }) => {
+      const res = await authClient.changePassword({
+        newPassword: data.newPassword,
+        currentPassword: data.currentPassword,
+        revokeOtherSessions: true,
+      });
+      if (res.error) throw res.error;
+      return res.data;
+    }
+  })
+
   return {
     session: sessionData,
     isAuthenticated: !!sessionData?.user,
-    isLoading: isSessionLoading || isLoggingIn || isLoggingOut,
+    isLoading: isSessionLoading || isLoggingIn || isLoggingOut || isChangingPassword,
     login,
     loginError,
-    logout
+    logout,
+    changePassword,
+    isChangingPassword,
+    changePasswordError,
   }
 }

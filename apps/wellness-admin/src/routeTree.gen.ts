@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as PackagesRouteImport } from './routes/packages'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminsRouteImport } from './routes/admins'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PackagesRoute = PackagesRouteImport.update({
   id: '/packages',
   path: '/packages',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/admins': typeof AdminsRoute
   '/login': typeof LoginRoute
   '/packages': typeof PackagesRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admins': typeof AdminsRoute
   '/login': typeof LoginRoute
   '/packages': typeof PackagesRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/admins': typeof AdminsRoute
   '/login': typeof LoginRoute
   '/packages': typeof PackagesRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admins' | '/login' | '/packages'
+  fullPaths: '/' | '/admins' | '/login' | '/packages' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admins' | '/login' | '/packages'
-  id: '__root__' | '/' | '/admins' | '/login' | '/packages'
+  to: '/' | '/admins' | '/login' | '/packages' | '/settings'
+  id: '__root__' | '/' | '/admins' | '/login' | '/packages' | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +76,18 @@ export interface RootRouteChildren {
   AdminsRoute: typeof AdminsRoute
   LoginRoute: typeof LoginRoute
   PackagesRoute: typeof PackagesRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/packages': {
       id: '/packages'
       path: '/packages'
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminsRoute: AdminsRoute,
   LoginRoute: LoginRoute,
   PackagesRoute: PackagesRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
