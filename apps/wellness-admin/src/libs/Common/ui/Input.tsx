@@ -3,21 +3,34 @@ import { cn } from "@/libs/Common/helpers/cn"
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   error?: boolean;
+  label?: React.ReactNode;
+  errorMessage?: string;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type = "text", error, ...props }, ref) => {
+  ({ className, type = "text", error, label, errorMessage, id, ...props }, ref) => {
     return (
-      <input
-        type={type}
-        className={cn(
-          "flex h-9 w-full rounded-md border border-slate-200 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:cursor-not-allowed disabled:opacity-50",
-          error && "border-red-500 focus-visible:ring-red-500",
-          className
+      <div className="space-y-2 w-full">
+        {label && (
+          <label className="text-sm font-medium text-slate-300" htmlFor={id}>
+            {label}
+          </label>
         )}
-        ref={ref}
-        {...props}
-      />
+        <input
+          id={id}
+          type={type}
+          className={cn(
+            "w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:border-indigo-500 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+            error && "border-red-500 focus:border-red-500 focus:ring-red-500",
+            className
+          )}
+          ref={ref}
+          {...props}
+        />
+        {errorMessage && (
+          <p className="text-sm text-red-500 font-medium">{errorMessage}</p>
+        )}
+      </div>
     )
   }
 )

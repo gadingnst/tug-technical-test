@@ -2,6 +2,7 @@ import * as React from "react"
 import { useAuth } from "@/modules/Auth/hooks/useAuth"
 import { ChangePasswordSchema } from "@wellness/shared-typescript"
 import { ShieldAlert, CheckCircle2 } from "lucide-react"
+import { Button } from "@/libs/Common/ui/Button"
 
 export const SettingsPage: React.FC = () => {
   const { changePassword, isChangingPassword, changePasswordError } = useAuth()
@@ -118,13 +119,13 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           <div className="pt-4 border-t border-slate-800 max-w-md">
-            <button 
+            <Button 
               type="submit" 
               disabled={isChangingPassword || !currentPassword || !newPassword || !confirmPassword}
-              className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-lg px-6 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-500/25"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg px-6 py-2 shadow-lg shadow-indigo-500/25"
             >
               {isChangingPassword ? "Saving..." : "Update Password"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

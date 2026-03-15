@@ -1,4 +1,5 @@
 import { Package, Plus } from 'lucide-react'
+import { Button } from '@/libs/Common/ui/Button'
 
 export function WellnessPackageListPage() {
   return (
@@ -8,10 +9,10 @@ export function WellnessPackageListPage() {
           <h2 className="text-3xl font-bold tracking-tight text-white mb-1">Wellness Packages</h2>
           <p className="text-slate-400">Manage and configure your wellness offerings.</p>
         </div>
-        <button className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-colors font-medium">
+        <Button className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
           <Plus className="w-4 h-4" />
           Create Package
-        </button>
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -31,7 +32,7 @@ export function WellnessPackageListPage() {
               <p className="text-slate-400 text-sm mb-4 line-clamp-2">Complete digital wellness tracking with advanced analytics and personalized daily insights.</p>
               <div className="flex items-center justify-between pt-4 border-t border-slate-800">
                 <span className="text-2xl font-bold text-white">$49<span className="text-sm font-normal text-slate-500">/mo</span></span>
-                <button className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Edit</button>
+                <Button variant="ghost" className="text-sm font-medium text-slate-300 hover:text-white hover:bg-transparent px-0 h-auto">Edit</Button>
               </div>
             </div>
           </div>

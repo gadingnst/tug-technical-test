@@ -1,4 +1,5 @@
 import { Users } from 'lucide-react'
+import { Button } from '@/libs/Common/ui/Button'
 
 export function AdminPage() {
   return (
@@ -8,10 +9,10 @@ export function AdminPage() {
           <h2 className="text-3xl font-bold tracking-tight text-white mb-1">User & Admin Management</h2>
           <p className="text-slate-400">Manage your administrators and platform users here.</p>
         </div>
-        <button className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg transition-colors font-medium">
+        <Button className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg">
           <Users className="w-4 h-4" />
           Add User
-        </button>
+        </Button>
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
