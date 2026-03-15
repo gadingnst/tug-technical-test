@@ -1,12 +1,12 @@
-import * as React from "react"
 import { cn } from "@/libs/Common/helpers/cn"
+import { ButtonHTMLAttributes, forwardRef } from "react"
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'default' | 'outline' | 'ghost' | 'destructive'
   size?: 'default' | 'sm' | 'lg' | 'icon'
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'default', size = 'default', ...props }, ref) => {
     return (
       <button

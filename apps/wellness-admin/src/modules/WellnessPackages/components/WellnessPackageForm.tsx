@@ -1,7 +1,7 @@
-import * as React from "react";
+import { FormEvent, useState } from "react";
 import { Input } from "@/libs/Common/ui/Input";
 import { Button } from "@/libs/Common/ui/Button";
-import { CreateWellnessPackageInput, UpdateWellnessPackageInput } from "@wellness/shared-typescript";
+import { UpdateWellnessPackageInput } from "@wellness/shared-typescript";
 
 interface WellnessPackageFormProps {
   initialData?: UpdateWellnessPackageInput;
@@ -12,14 +12,14 @@ interface WellnessPackageFormProps {
 }
 
 export function WellnessPackageForm({ initialData, onSubmit, isLoading, onCancel, mode }: WellnessPackageFormProps) {
-  const [name, setName] = React.useState(initialData?.name || "");
-  const [description, setDescription] = React.useState(initialData?.description || "");
-  const [price, setPrice] = React.useState(initialData?.price?.toString() || "");
-  const [durationMinutes, setDurationMinutes] = React.useState(initialData?.duration_minutes?.toString() || "");
+  const [name, setName] = useState(initialData?.name || "");
+  const [description, setDescription] = useState(initialData?.description || "");
+  const [price, setPrice] = useState(initialData?.price?.toString() || "");
+  const [durationMinutes, setDurationMinutes] = useState(initialData?.duration_minutes?.toString() || "");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
+
     // Convert string inputs back to numbers before submission
     const data = {
       name,
@@ -27,7 +27,7 @@ export function WellnessPackageForm({ initialData, onSubmit, isLoading, onCancel
       price: parseInt(price, 10),
       duration_minutes: parseInt(durationMinutes, 10),
     };
-    
+
     onSubmit(data);
   };
 
@@ -42,7 +42,7 @@ export function WellnessPackageForm({ initialData, onSubmit, isLoading, onCancel
         disabled={isLoading}
         required
       />
-      
+
       <div className="space-y-2 w-full">
         <label className="text-sm font-medium text-slate-300" htmlFor="description">
           Description
@@ -69,7 +69,7 @@ export function WellnessPackageForm({ initialData, onSubmit, isLoading, onCancel
           min="0"
           required
         />
-        
+
         <Input
           id="duration"
           type="number"
@@ -84,16 +84,16 @@ export function WellnessPackageForm({ initialData, onSubmit, isLoading, onCancel
       </div>
 
       <div className="flex justify-end gap-3 pt-6 border-t border-slate-800">
-        <Button 
-          type="button" 
-          variant="ghost" 
+        <Button
+          type="button"
+          variant="ghost"
           onClick={onCancel}
           disabled={isLoading}
         >
           Cancel
         </Button>
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           disabled={isLoading || !name || !price || !durationMinutes}
         >
           {isLoading ? "Saving..." : mode === 'create' ? "Create Package" : "Save Changes"}

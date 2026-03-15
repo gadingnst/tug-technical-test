@@ -1,23 +1,23 @@
-import * as React from 'react'
 import { Package, Plus, Pencil, Trash2 } from 'lucide-react'
 import { Button } from '@/libs/Common/ui/Button'
 import { Modal } from '@/libs/Common/ui/Modal'
-import { 
-  Table, 
-  TableHeader, 
-  TableBody, 
-  TableRow, 
-  TableHead, 
-  TableCell 
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell
 } from '@/libs/Common/ui/Table'
-import { 
-  useWellnessPackages, 
-  useCreateWellnessPackage, 
-  useUpdateWellnessPackage, 
-  useDeleteWellnessPackage 
+import {
+  useWellnessPackages,
+  useCreateWellnessPackage,
+  useUpdateWellnessPackage,
+  useDeleteWellnessPackage
 } from './hooks/useWellnessPackages'
 import { WellnessPackageForm } from './components/WellnessPackageForm'
 import type { WellnessPackage } from '@wellness/shared-typescript'
+import { useState } from 'react'
 
 export function WellnessPackageListPage() {
   const { data: packages = [], isLoading, error } = useWellnessPackages()
@@ -25,8 +25,8 @@ export function WellnessPackageListPage() {
   const { mutateAsync: updatePackage, isPending: isUpdating } = useUpdateWellnessPackage()
   const { mutateAsync: deletePackage, isPending: isDeleting } = useDeleteWellnessPackage()
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
-  const [selectedPackage, setSelectedPackage] = React.useState<WellnessPackage | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedPackage, setSelectedPackage] = useState<WellnessPackage | null>(null)
 
   const handleCreate = () => {
     setSelectedPackage(null)
@@ -75,7 +75,7 @@ export function WellnessPackageListPage() {
           <h2 className="text-3xl font-bold tracking-tight text-white mb-1">Wellness Packages</h2>
           <p className="text-slate-400">Manage and configure your wellness offerings.</p>
         </div>
-        <Button 
+        <Button
           onClick={handleCreate}
           className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg shadow-purple-500/20 shadow-lg"
         >
@@ -136,8 +136,8 @@ export function WellnessPackageListPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <Button 
-                          variant="ghost" 
+                        <Button
+                          variant="ghost"
                           size="icon"
                           onClick={() => handleEdit(pkg)}
                           className="h-8 w-8 text-slate-400 hover:text-indigo-400"
@@ -145,8 +145,8 @@ export function WellnessPackageListPage() {
                           <Pencil className="h-4 w-4" />
                           <span className="sr-only">Edit</span>
                         </Button>
-                        <Button 
-                          variant="ghost" 
+                        <Button
+                          variant="ghost"
                           size="icon"
                           onClick={() => handleDelete(pkg.id)}
                           disabled={isDeleting}

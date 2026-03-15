@@ -1,4 +1,4 @@
-import * as React from "react"
+import { ReactNode, useEffect } from "react"
 import { X } from "lucide-react"
 import { cn } from "@/libs/Common/helpers/cn"
 
@@ -6,12 +6,12 @@ interface ModalProps {
   isOpen: boolean
   onClose: () => void
   title: string
-  children: React.ReactNode
+  children: ReactNode
   className?: string
 }
 
 export function Modal({ isOpen, onClose, title, children, className }: ModalProps) {
-  React.useEffect(() => {
+  useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
     }
@@ -32,14 +32,14 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
-      
+
       {/* Modal Dialog */}
-      <div 
+      <div
         className={cn(
           "relative w-full max-w-lg scale-100 transform overflow-hidden rounded-2xl bg-slate-900 border border-slate-800 p-6 text-left shadow-2xl transition-all",
           "animate-in fade-in zoom-in-95 duration-200",
@@ -61,7 +61,7 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
             <X className="h-5 w-5" />
           </button>
         </div>
-        
+
         <div className="mt-2">
           {children}
         </div>

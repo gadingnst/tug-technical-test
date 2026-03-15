@@ -1,13 +1,13 @@
-import * as React from "react"
+import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
 import { cn } from "@/libs/Common/helpers/cn"
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   error?: boolean;
-  label?: React.ReactNode;
+  label?: ReactNode;
   errorMessage?: string;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type = "text", error, label, errorMessage, id, ...props }, ref) => {
     return (
       <div className="space-y-2 w-full">

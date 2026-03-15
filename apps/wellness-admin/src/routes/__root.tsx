@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { Sidebar } from '../libs/Common/ui/Sidebar'
@@ -14,14 +13,14 @@ function RootComponent() {
   return (
     <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
       {!isLoginPage && <Sidebar />}
-      
+
       <main className="flex-1 overflow-auto h-screen relative">
         <div className="p-8 h-full">
           <Outlet />
         </div>
       </main>
 
-      {/* <TanStackRouterDevtools position="bottom-right" /> */}
+      <TanStackRouterDevtools position="bottom-right" />
     </div>
   )
 }

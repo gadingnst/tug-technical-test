@@ -1,5 +1,4 @@
-import * as React from "react"
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { useNavigate } from "@tanstack/react-router"
 import { useAuth } from "@/modules/Auth/hooks/useAuth"
 import { LoginSchema } from "@wellness/shared-typescript"
@@ -11,7 +10,7 @@ export const useLoginForm = () => {
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setErrors({})
 
