@@ -11,16 +11,25 @@
     "start": "vite"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/router-plugin": "^1.117.2",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@tanstack/router-plugin": "^1.117.2",
     "@vitejs/plugin-react": "^4.3.2",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
     "vite": "^6.0.3"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-router": "^1.117.1",
     "@tanstack/router-devtools": "^1.117.1",
+    "better-auth": "^1.5.5",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.577.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.5.0"
   }
 }

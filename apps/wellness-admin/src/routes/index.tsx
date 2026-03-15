@@ -1,8 +1,14 @@
-import * as React from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+import { authClient } from '@/libs/Common/api/auth'
 import { CORE_API_BASE_URL } from '../configs/envs'
 
 export const Route = createFileRoute('/')({
+  beforeLoad: async () => {
+    const { data: session } = await authClient.getSession()
+    if (!session?.user) {
+      throw redirect({ to: '/login' })
+    }
+  },
   component: HomeComponent,
 })
 

@@ -12,6 +12,7 @@ import {
   BETTER_AUTH_SECRET,
   BETTER_AUTH_URL,
 } from '@/configs/envs';
+import { TRUSTED_ORIGINS } from '@/configs/trusted-origins';
 
 import * as schema from '@/database/schemas';
 
@@ -28,6 +29,7 @@ const db = drizzle(pool, { schema });
 export const auth = betterAuth({
   baseURL: BETTER_AUTH_URL,
   secret: BETTER_AUTH_SECRET,
+  trustedOrigins: TRUSTED_ORIGINS,
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema,

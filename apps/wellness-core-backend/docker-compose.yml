@@ -6,13 +6,6 @@ services:
       dockerfile: apps/wellness-core-backend/Dockerfile
     ports:
       - "9100:9100"
-    environment:
-      # These environment variables will be used to connect to your external DB
-      - DB_HOST=${DB_HOST:-10.18.1.103}
-      - DB_PORT=${DB_PORT:-5433}
-      - DB_USERNAME=${DB_USERNAME:-postgres}
-      - DB_PASSWORD=${DB_PASSWORD:-postgres}
-      - DB_NAME=${DB_NAME:-wellness_db}
     networks:
       - wellness-network
 

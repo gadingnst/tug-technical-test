@@ -14,13 +14,6 @@ services:
     working_dir: /usr/src/app
     ports:
       - "9100:9100"
-    environment:
-      # External DB config
-      - DB_HOST=${DB_HOST:-10.18.1.103}
-      - DB_PORT=${DB_PORT:-5433}
-      - DB_USERNAME=${DB_USERNAME:-postgres}
-      - DB_PASSWORD=${DB_PASSWORD:-postgres}
-      - DB_NAME=${DB_NAME:-wellness_db}
     volumes:
       - .:/usr/src/app
       - node_modules:/usr/src/app/node_modules
