@@ -1,6 +1,6 @@
 import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
-import { Sidebar } from '../libs/Common/ui/Sidebar'
+import { Sidebar } from '@/libs/Common/ui/Sidebar'
 
 export const Route = createRootRoute({
   component: RootComponent,
