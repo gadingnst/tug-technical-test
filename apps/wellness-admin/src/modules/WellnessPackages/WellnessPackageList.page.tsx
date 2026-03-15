@@ -9,64 +9,26 @@ import {
   TableHead,
   TableCell
 } from '@/libs/Common/ui/Table'
-import {
-  useWellnessPackages,
-  useCreateWellnessPackage,
-  useUpdateWellnessPackage,
-  useDeleteWellnessPackage
-} from './hooks/useWellnessPackages'
 import { WellnessPackageForm } from './components/WellnessPackageForm'
-import type { WellnessPackage } from '@wellness/shared-typescript'
-import { useState } from 'react'
+import { useWellnessPackageList } from './hooks/useWellnessPackageList'
 
 export function WellnessPackageListPage() {
-  const { data: packages = [], isLoading, error } = useWellnessPackages()
-  const { mutateAsync: createPackage, isPending: isCreating } = useCreateWellnessPackage()
-  const { mutateAsync: updatePackage, isPending: isUpdating } = useUpdateWellnessPackage()
-  const { mutateAsync: deletePackage, isPending: isDeleting } = useDeleteWellnessPackage()
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedPackage, setSelectedPackage] = useState<WellnessPackage | null>(null)
-
-  const handleCreate = () => {
-    setSelectedPackage(null)
-    setIsModalOpen(true)
-  }
-
-  const handleEdit = (pkg: WellnessPackage) => {
-    setSelectedPackage(pkg)
-    setIsModalOpen(true)
-  }
-
-  const handleDelete = async (id: number) => {
-    if (window.confirm('Are you sure you want to delete this package? This action cannot be undone.')) {
-      try {
-        await deletePackage(id)
-      } catch (err) {
-        alert('Failed to delete package')
-      }
-    }
-  }
-
-  const handleFormSubmit = async (data: any) => {
-    try {
-      if (selectedPackage) {
-        await updatePackage({ id: selectedPackage.id, data })
-      } else {
-        await createPackage(data)
-      }
-      setIsModalOpen(false)
-    } catch (err) {
-      alert('Failed to save package')
-    }
-  }
-
-  const formatPrice = (priceInCents: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(priceInCents / 100)
-  }
+  const {
+    packages,
+    isLoading,
+    error,
+    isModalOpen,
+    setIsModalOpen,
+    selectedPackage,
+    isCreating,
+    isUpdating,
+    isDeleting,
+    handleCreate,
+    handleEdit,
+    handleDelete,
+    handleFormSubmit,
+    formatPrice
+  } = useWellnessPackageList()
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-6xl">
