@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    image: wellness-core-backend
+    build:
+      context: .
+      dockerfile: apps/wellness-core-backend/Dockerfile
+    ports:
+      - "9100:9100"
+    environment:
+      # External DB config
+      - DB_HOST=${DB_HOST:-10.18.1.103}
+      - DB_PORT=${DB_PORT:-5433}
+      - DB_USERNAME=${DB_USERNAME:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_NAME=${DB_NAME:-wellness_db}
+    networks:
+      - platform-network
+
+  admin:
+    image: wellness-admin
+    build:
+      context: .
+      dockerfile: apps/wellness-admin/Dockerfile
+    ports:
+      - "3001:80" # Map host 3001 to nginx internal 80
+    networks:
+      - platform-network
+
+networks:
+  platform-network:
+    driver: bridge

@@ -4,13 +4,18 @@
   "private": true,
   "description": "Wellness Platform Monorepo",
   "workspaces": [
-    "wellness-core-backend",
-    "wellness-admin"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "dev:backend": "npm run start:dev --workspace=wellness-core-backend",
     "dev:admin": "npm run dev --workspace=wellness-admin",
+    "build:shared": "npm run build --workspace=@wellness/shared-typescript",
     "build:backend": "npm run build --workspace=wellness-core-backend",
-    "build:admin": "npm run build --workspace=wellness-admin"
+    "build:admin": "npm run build --workspace=wellness-admin",
+    "build:all": "npm run build:shared && npm run build:backend && npm run build:admin",
+    "drizzle:generate": "npm run drizzle:generate --workspace=wellness-core-backend",
+    "drizzle:push": "npm run drizzle:push --workspace=wellness-core-backend",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up"
   }
 }

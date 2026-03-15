@@ -11,4 +11,7 @@ export default defineConfig({
     }) as any,
     react(),
   ],
+  server: {
+    host: '0.0.0.0',
+  },
 })
