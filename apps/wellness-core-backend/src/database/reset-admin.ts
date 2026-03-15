@@ -9,6 +9,4 @@ async function reset() {
   process.exit(0);
 }
 
-reset();
-
-reset();
+void reset();
