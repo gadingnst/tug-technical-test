@@ -20,7 +20,7 @@ import { eq } from 'drizzle-orm';
 @Controller('admin/admins')
 @UseGuards(AdminAuthGuard)
 export class AdminManagementController {
-  constructor(@Inject(DRIZZLE) private readonly db: DrizzleDB) {}
+  constructor(@Inject(DRIZZLE) private readonly db: DrizzleDB) { }
 
   @Get()
   async listAdmins() {
@@ -36,7 +36,7 @@ export class AdminManagementController {
     }
 
     const { email } = parsed.data;
-    
+
     // Generate a secure random password length 16
     const password = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
 
@@ -82,6 +82,7 @@ export class AdminManagementController {
       const headers = new Headers();
       Object.entries(request.headers).forEach(([key, value]) => {
         if (typeof value === 'string') headers.append(key, value);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         else if (Array.isArray(value)) value.forEach((v) => headers.append(key, v));
       });
 
@@ -97,7 +98,7 @@ export class AdminManagementController {
 
       // 2. Verify if it already exists in admins table to be idempotent
       const existing = await this.db.select().from(admins).where(eq(admins.user_id, userId)).limit(1);
-      
+
       let adminRecord;
       if (existing.length === 0) {
         const insertResult = await this.db.insert(admins).values({

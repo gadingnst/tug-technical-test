@@ -46,6 +46,9 @@ cd apps/wellness-app && flutter pub get && flutter run
 For running the stack in Docker, please refer to the comprehensive guide:
 👉 **[Docker Setup & Deployment Guide](docs/DOCKER.md)**
 
+For details on the authentication module and admin access:
+👉 **[Authentication & Guarding Details](docs/AUTH.md)**
+
 To start development environment with **Hot Reload**:
 ```bash
 npm run docker:dev
@@ -60,6 +63,12 @@ npm run drizzle:push
 
 # Generate migration
 npm run drizzle:generate
+
+# Run migrations
+npm run drizzle:migrate
+
+# Seed initial Super Admin
+npm run seed:admin
 ```
 
 ## API Endpoints
