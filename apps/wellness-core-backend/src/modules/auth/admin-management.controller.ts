@@ -13,7 +13,7 @@ import { AdminAuthGuard } from '@/guards/admin-auth.guard';
 import { Inject } from '@nestjs/common';
 import { DRIZZLE } from '@/database/database.module';
 import type { DrizzleDB } from '@/database/database.module';
-import { admins } from '@/database/schemas';
+import { admins, user } from '@/database/schemas';
 import { AddAdminSchema, UpgradeAdminSchema } from '@wellness/shared-typescript';
 import { eq } from 'drizzle-orm';
 
@@ -24,7 +24,16 @@ export class AdminManagementController {
 
   @Get()
   async listAdmins() {
-    const adminList = await this.db.select().from(admins);
+    const adminList = await this.db
+      .select({
+        id: admins.id,
+        user_id: admins.user_id,
+        email: user.email,
+        created_at: admins.created_at,
+      })
+      .from(admins)
+      .innerJoin(user, eq(admins.user_id, user.id));
+
     return { data: adminList };
   }
 
