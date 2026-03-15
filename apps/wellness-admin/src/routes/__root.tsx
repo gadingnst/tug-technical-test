@@ -1,36 +1,26 @@
 import * as React from 'react'
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
+import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { Sidebar } from '../libs/Common/ui/Sidebar'
 
 export const Route = createRootRoute({
   component: RootComponent,
 })
 
 function RootComponent() {
+  const isLoginPage = window.location.pathname === '/login'
+
   return (
-    <>
-      <div className="p-2 flex gap-2 text-lg">
-        <Link
-          to="/"
-          activeProps={{
-            className: 'font-bold',
-          }}
-          activeOptions={{ exact: true }}
-        >
-          Home
-        </Link>{' '}
-        <Link
-          to="/about"
-          activeProps={{
-            className: 'font-bold',
-          }}
-        >
-          About
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools position="bottom-right" />
-    </>
+    <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
+      {!isLoginPage && <Sidebar />}
+      
+      <main className="flex-1 overflow-auto h-screen relative">
+        <div className="p-8 h-full">
+          <Outlet />
+        </div>
+      </main>
+
+      {/* <TanStackRouterDevtools position="bottom-right" /> */}
+    </div>
   )
 }

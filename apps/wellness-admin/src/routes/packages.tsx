@@ -1,20 +1,14 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { authClient } from '@/libs/Common/api/auth'
+import { WellnessPackageListPage } from '@/modules/WellnessPackages/WellnessPackageList.page'
 
-export const Route = createFileRoute('/about')({
+export const Route = createFileRoute('/packages')({
   beforeLoad: async () => {
     const { data: session } = await authClient.getSession()
     if (!session?.user) {
       throw redirect({ to: '/login' })
     }
   },
-  component: AboutComponent,
+  component: WellnessPackageListPage,
 })
 
-function AboutComponent() {
-  return (
-    <div className="p-2">
-      <h3>About</h3>
-    </div>
-  )
-}
