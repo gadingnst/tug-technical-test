@@ -10,6 +10,7 @@ const adminApi = new BaseHttp({
 export const adminService = {
   addAdmin: (data: AddAdminInput) => adminApi.post('/admin/admins', { body: JSON.stringify(data) }),
   listAdmins: () => adminApi.get('/admin/admins'),
+  deleteAdmin: (id: string | number) => adminApi.delete(`/admin/admins/${id}`),
 };
 
 export default adminApi;

@@ -1,4 +1,4 @@
-import { Users, Plus, CheckCircle2, Copy } from 'lucide-react'
+import { Users, Plus, CheckCircle2, Copy, Trash2, ShieldAlert } from 'lucide-react'
 import { Button } from '@/libs/Common/ui/Button'
 import { Modal } from '@/libs/Common/ui/Modal'
 import { AddAdminForm } from './components/AddAdminForm'
@@ -18,13 +18,18 @@ export function AdminPage() {
     isLoading,
     error,
     isCreating,
+    isDeleting,
     isFormModalOpen,
     setIsFormModalOpen,
     successData,
+    adminToDelete,
+    setAdminToDelete,
     isCopied,
     copyHandler,
     handleAddAdmin,
-    handleCloseSuccess
+    handleDeleteAdmin,
+    handleCloseSuccess,
+    currentUserId
   } = useAdminList()
 
   return (
@@ -55,18 +60,19 @@ export function AdminPage() {
                 <TableHead>User ID</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Role</TableHead>
+                <TableHead className="w-[100px] text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={3} className="h-24 text-center text-slate-400">
+                  <TableCell colSpan={4} className="h-24 text-center text-slate-400">
                     Loading admins...
                   </TableCell>
                 </TableRow>
               ) : admins.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={3} className="h-24 text-center text-slate-400">
+                  <TableCell colSpan={4} className="h-24 text-center text-slate-400">
                     <div className="flex flex-col items-center justify-center space-y-3">
                       <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
                         <Users className="w-6 h-6 text-slate-400" />
@@ -80,6 +86,9 @@ export function AdminPage() {
                   <TableRow key={admin.id}>
                     <TableCell className="font-medium text-slate-200">
                       {admin.user_id}
+                      {currentUserId === admin.user_id && (
+                        <span className="ml-2 text-xs text-indigo-400">(You)</span>
+                      )}
                     </TableCell>
                     <TableCell className="text-slate-300">
                       {admin.email || "—"}
@@ -88,6 +97,19 @@ export function AdminPage() {
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                         Admin
                       </span>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {currentUserId !== admin.user_id && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-red-400 hover:text-red-300 hover:bg-red-500/10 h-8 w-8 p-0"
+                          title="Delete Admin"
+                          onClick={() => setAdminToDelete(admin.id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))
@@ -159,6 +181,48 @@ export function AdminPage() {
             </div>
           </div>
         )}
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        isOpen={!!adminToDelete}
+        onClose={() => !isDeleting && setAdminToDelete(null)}
+        title="Remove Administrator"
+      >
+        <div className="space-y-6">
+          <div className="flex flex-col items-center justify-center text-center space-y-4">
+            <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center border border-red-500/20">
+              <ShieldAlert className="w-8 h-8 text-red-500" />
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-medium text-white mb-2">Are you absolutely sure?</h3>
+              <p className="text-sm text-slate-400 max-w-[280px] mx-auto">
+                This action cannot be undone. This will permanently remove the administrator and delete their account from the platform.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-3 justify-end pt-4 border-t border-slate-800">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setAdminToDelete(null)}
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="default"
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={handleDeleteAdmin}
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Removing..." : "Remove Admin"}
+            </Button>
+          </div>
+        </div>
       </Modal>
     </div>
   )

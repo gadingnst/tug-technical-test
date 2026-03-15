@@ -28,3 +28,21 @@ export const useCreateAdmin = () => {
     },
   });
 };
+
+export const useDeleteAdmin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string | number) => {
+      const response = await adminService.deleteAdmin(id);
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.message || 'Failed to delete admin');
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ADMINS_QUERY_KEY });
+    },
+  });
+};

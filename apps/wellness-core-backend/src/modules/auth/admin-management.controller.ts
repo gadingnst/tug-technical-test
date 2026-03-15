@@ -7,6 +7,8 @@ import {
   UseGuards,
   BadRequestException,
   InternalServerErrorException,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { auth } from '@/modules/auth/auth.provider';
 import { AdminAuthGuard } from '@/guards/admin-auth.guard';
@@ -46,6 +48,12 @@ export class AdminManagementController {
 
     const { email } = parsed.data;
 
+    // Check if email already exists
+    const existingUser = await this.db.select().from(user).where(eq(user.email, email)).limit(1);
+    if (existingUser.length > 0) {
+      throw new BadRequestException('Email already exists');
+    }
+
     // Generate a secure random password length 16
     const password = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
 
@@ -75,6 +83,41 @@ export class AdminManagementController {
     } catch (e: unknown) {
       const err = e as Error;
       throw new InternalServerErrorException(`Failed to add admin: ${err.message}`);
+    }
+  }
+
+  @Delete(':id')
+  async deleteAdmin(@Param('id') id: string, @Req() req: Request & { user?: { id: string } }) {
+    const adminId = parseInt(id, 10);
+    if (isNaN(adminId)) {
+      throw new BadRequestException('Invalid admin ID');
+    }
+
+    // 1. Find the admin record to get the user_id
+    const adminRecord = await this.db.select().from(admins).where(eq(admins.id, adminId)).limit(1);
+    
+    if (adminRecord.length === 0) {
+      throw new BadRequestException('Admin not found');
+    }
+
+    const targetUserId = adminRecord[0].user_id;
+
+    // 2. Prevent self deletion
+    if (req.user && req.user.id === targetUserId) {
+      throw new BadRequestException('You cannot delete your own admin account');
+    }
+
+    try {
+      // 3. Delete user from the database. 
+      // Because `admins.user_id` has `onDelete: 'cascade'`, it will automatically be removed from the `admins` table too.
+      await this.db.delete(user).where(eq(user.id, targetUserId));
+
+      return {
+        message: 'Admin deleted successfully',
+      };
+    } catch (e: unknown) {
+      const err = e as Error;
+      throw new InternalServerErrorException(`Failed to delete admin: ${err.message}`);
     }
   }
 
