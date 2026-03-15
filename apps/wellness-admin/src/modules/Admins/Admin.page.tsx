@@ -11,6 +11,7 @@ import {
   TableHead,
   TableCell
 } from '@/libs/Common/ui/Table'
+import { type Admin } from '@wellness/shared-typescript'
 
 export function AdminPage() {
   const {
@@ -82,7 +83,7 @@ export function AdminPage() {
                   </TableCell>
                 </TableRow>
               ) : (
-                admins.map((admin: any) => (
+                admins.map((admin: Admin) => (
                   <TableRow key={admin.id}>
                     <TableCell className="font-medium text-slate-200">
                       {admin.user_id}

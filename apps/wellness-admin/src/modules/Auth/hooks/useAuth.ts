@@ -1,58 +1,36 @@
 import { useMutation } from "@tanstack/react-query"
-import { signIn, signOut, useSession, authClient } from "@/libs/Common/api/auth"
+import { login, logout, changePassword, useSession } from "@/libs/Common/api/auth"
 import type { LoginInput } from "@wellness/shared-typescript"
 
 export const useAuth = () => {
   const { data: sessionData, isPending: isSessionLoading, refetch } = useSession()
 
-  const { mutateAsync: login, isPending: isLoggingIn, error: loginError } = useMutation({
-    mutationFn: async (credentials: LoginInput) => {
-      const res = await signIn.email({
-        email: credentials.email,
-        password: credentials.password,
-      });
-
-      if (res.error) {
-        throw res.error;
-      }
-      return res.data;
-    },
+  const { mutateAsync: loginMutation, isPending: isLoggingIn, error: loginError } = useMutation({
+    mutationFn: (credentials: LoginInput) => login(credentials),
     onSuccess: () => {
       refetch();
     }
   })
 
-  const { mutateAsync: logout, isPending: isLoggingOut } = useMutation({
-    mutationFn: async () => {
-      const res = await signOut();
-      if (res.error) throw res.error;
-      return res;
-    },
+  const { mutateAsync: logoutMutation, isPending: isLoggingOut } = useMutation({
+    mutationFn: () => logout(),
     onSuccess: () => {
       refetch();
     }
   })
 
-  const { mutateAsync: changePassword, isPending: isChangingPassword, error: changePasswordError } = useMutation({
-    mutationFn: async (data: { currentPassword: string; newPassword: string }) => {
-      const res = await authClient.changePassword({
-        newPassword: data.newPassword,
-        currentPassword: data.currentPassword,
-        revokeOtherSessions: true,
-      });
-      if (res.error) throw res.error;
-      return res.data;
-    }
+  const { mutateAsync: changePasswordMutation, isPending: isChangingPassword, error: changePasswordError } = useMutation({
+    mutationFn: (data: { currentPassword: string; newPassword: string }) => changePassword(data)
   })
 
   return {
     session: sessionData,
     isAuthenticated: !!sessionData?.user,
     isLoading: isSessionLoading || isLoggingIn || isLoggingOut || isChangingPassword,
-    login,
+    login: loginMutation,
     loginError,
-    logout,
-    changePassword,
+    logout: logoutMutation,
+    changePassword: changePasswordMutation,
     isChangingPassword,
     changePasswordError,
   }

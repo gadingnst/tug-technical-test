@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { toNodeHandler } from 'better-auth/node';
 import { auth } from '@/modules/auth/auth.provider';
 import { TRUSTED_ORIGINS } from '@/configs/trusted-origins';
+import { ApiResponseInterceptor } from '@/common/interceptors/api-response.interceptor';
+import { ApiResponseExceptionFilter } from '@/common/filters/api-response-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,6 +13,9 @@ async function bootstrap() {
     origin: TRUSTED_ORIGINS,
     credentials: true,
   });
+
+  app.useGlobalInterceptors(new ApiResponseInterceptor());
+  app.useGlobalFilters(new ApiResponseExceptionFilter());
 
   // Mount Better Auth handler
   app.use('/api/auth', toNodeHandler(auth));

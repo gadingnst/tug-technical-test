@@ -43,10 +43,7 @@ export class AuthController {
     // Because better-auth handles set-cookie natively if we don't use bearer, but with bearer plugin, 
     // it returns the token in the 'set-auth-token' header
 
-    return {
-      message: 'Login successful',
-      token,
-    };
+    return { token };
   }
 
   @Post('change-password')

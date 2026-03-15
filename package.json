@@ -17,5 +17,8 @@
     "drizzle:generate": "npm run drizzle:generate --workspace=wellness-core-backend",
     "drizzle:push": "npm run drizzle:push --workspace=wellness-core-backend",
     "docker:dev": "docker-compose -f docker-compose.dev.yml up"
+  },
+  "dependencies": {
+    "react-hot-toast": "^2.6.0"
   }
 }

@@ -36,7 +36,7 @@ export class AdminManagementController {
       .from(admins)
       .innerJoin(user, eq(admins.user_id, user.id));
 
-    return { data: adminList };
+    return adminList;
   }
 
   @Post()
@@ -74,11 +74,8 @@ export class AdminManagementController {
       }).returning();
 
       return {
-        message: 'Admin added successfully',
-        data: {
-          admin: insertResult[0],
-          generatedPassword: password, // For returning to the caller to give to the new admin
-        },
+        admin: insertResult[0],
+        generatedPassword: password,
       };
     } catch (e: unknown) {
       const err = e as Error;
@@ -161,10 +158,7 @@ export class AdminManagementController {
         adminRecord = existing[0];
       }
 
-      return {
-        message: 'User upgraded to admin successfully',
-        data: adminRecord,
-      };
+      return adminRecord;
     } catch (e: unknown) {
       const err = e as Error;
       throw new InternalServerErrorException(`Failed to upgrade user: ${err.message}`);

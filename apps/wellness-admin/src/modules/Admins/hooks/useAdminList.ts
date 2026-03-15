@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAdmins, useCreateAdmin, useDeleteAdmin } from './useAdmins'
 import useClipboard from '@/libs/Common/hooks/useClipboard'
 import { useAuth } from '@/modules/Auth/hooks/useAuth'
+import toast from 'react-hot-toast'
 
 export function useAdminList() {
   const { session } = useAuth()
@@ -19,9 +20,10 @@ export function useAdminList() {
     try {
       const res = await createAdmin(data);
       setIsFormModalOpen(false);
-      setSuccessData({ email: data.email, password: res.data.generatedPassword });
+      setSuccessData({ email: data.email, password: res.generatedPassword });
+      toast.success('Admin added successfully!');
     } catch (err: any) {
-      alert(err.message || 'Failed to add admin');
+      toast.error(err.message || 'Failed to add admin');
     }
   }
 
@@ -30,8 +32,9 @@ export function useAdminList() {
     try {
       await deleteAdmin(adminToDelete);
       setAdminToDelete(null);
+      toast.success('Admin removed successfully!');
     } catch (err: any) {
-      alert(err.message || 'Failed to delete admin');
+      toast.error(err.message || 'Failed to delete admin');
     }
   }
 

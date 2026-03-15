@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react"
 import { useNavigate } from "@tanstack/react-router"
 import { useAuth } from "@/modules/Auth/hooks/useAuth"
 import { LoginSchema } from "@wellness/shared-typescript"
+import toast from "react-hot-toast"
 
 export const useLoginForm = () => {
   const { login, isLoading, loginError } = useAuth()
@@ -28,8 +29,10 @@ export const useLoginForm = () => {
 
     try {
       await login({ email, password })
+      toast.success('Successfully logged in')
       navigate({ to: "/" })
-    } catch (err) {
+    } catch (err: any) {
+      toast.error(err.message || 'Login failed')
       console.error('Login failed', err)
     }
   }

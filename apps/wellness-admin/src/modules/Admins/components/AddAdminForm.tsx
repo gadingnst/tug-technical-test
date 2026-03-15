@@ -2,8 +2,10 @@ import { FormEvent, useState } from "react";
 import { Input } from "@/libs/Common/ui/Input";
 import { Button } from "@/libs/Common/ui/Button";
 
+import { type AddAdminInput } from "@wellness/shared-typescript";
+
 interface AddAdminFormProps {
-  onSubmit: (data: { email: string }) => void;
+  onSubmit: (data: AddAdminInput) => void;
   isLoading?: boolean;
   onCancel: () => void;
 }

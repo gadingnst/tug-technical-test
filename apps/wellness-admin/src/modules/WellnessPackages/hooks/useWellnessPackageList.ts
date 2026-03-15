@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import {
   useWellnessPackages,
   useCreateWellnessPackage,
@@ -30,8 +31,9 @@ export function useWellnessPackageList() {
     if (window.confirm('Are you sure you want to delete this package? This action cannot be undone.')) {
       try {
         await deletePackage(id)
-      } catch (err) {
-        alert('Failed to delete package')
+        toast.success('Package deleted successfully');
+      } catch (err: any) {
+        toast.error(err.message || 'Failed to delete package')
       }
     }
   }
@@ -40,12 +42,14 @@ export function useWellnessPackageList() {
     try {
       if (selectedPackage) {
         await updatePackage({ id: selectedPackage.id, data })
+        toast.success('Package updated successfully');
       } else {
         await createPackage(data)
+        toast.success('Package created successfully');
       }
       setIsModalOpen(false)
-    } catch (err) {
-      alert('Failed to save package')
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to save package')
     }
   }
 

@@ -1,6 +1,7 @@
 import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { Sidebar } from '@/libs/Common/ui/Sidebar'
+import { Toaster } from 'react-hot-toast'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -20,6 +21,7 @@ function RootComponent() {
         </div>
       </main>
 
+      <Toaster position="top-right" />
       <TanStackRouterDevtools position="bottom-right" />
     </div>
   )

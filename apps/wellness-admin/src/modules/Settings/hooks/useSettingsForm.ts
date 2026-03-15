@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react"
 import { useAuth } from "@/modules/Auth/hooks/useAuth"
 import { ChangePasswordSchema } from "@wellness/shared-typescript"
+import toast from "react-hot-toast"
 
 export const useSettingsForm = () => {
   const { changePassword, isChangingPassword, changePasswordError } = useAuth()
@@ -36,11 +37,13 @@ export const useSettingsForm = () => {
 
     try {
       await changePassword({ currentPassword, newPassword })
+      toast.success('Password changed successfully')
       setSuccess(true)
       setCurrentPassword("")
       setNewPassword("")
       setConfirmPassword("")
-    } catch (err: unknown) {
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to change password')
       console.error('Change password failed', err)
     }
   }
