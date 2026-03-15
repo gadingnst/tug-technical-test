@@ -1,51 +1,22 @@
-import * as React from "react"
-import { useAuth } from "@/modules/Auth/hooks/useAuth"
-import { ChangePasswordSchema } from "@wellness/shared-typescript"
 import { ShieldAlert, CheckCircle2 } from "lucide-react"
 import { Button } from "@/libs/Common/ui/Button"
+import { Input } from "@/libs/Common/ui/Input"
+import { useSettingsForm } from "./hooks/useSettingsForm"
 
-export const SettingsPage: React.FC = () => {
-  const { changePassword, isChangingPassword, changePasswordError } = useAuth()
-  
-  const [currentPassword, setCurrentPassword] = React.useState("")
-  const [newPassword, setNewPassword] = React.useState("")
-  const [confirmPassword, setConfirmPassword] = React.useState("")
-  
-  const [errors, setErrors] = React.useState<Record<string, string>>({})
-  const [success, setSuccess] = React.useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setErrors({})
-    setSuccess(false)
-    
-    if (newPassword !== confirmPassword) {
-      setErrors({ confirmPassword: "Passwords do not match" })
-      return
-    }
-
-    const parsed = ChangePasswordSchema.safeParse({ currentPassword, newPassword })
-    if (!parsed.success) {
-      const fieldErrors: Record<string, string> = {}
-      parsed.error.errors.forEach((err: any) => {
-        if (err.path[0]) {
-          fieldErrors[err.path[0].toString()] = err.message
-        }
-      })
-      setErrors(fieldErrors)
-      return
-    }
-
-    try {
-      await changePassword({ currentPassword, newPassword })
-      setSuccess(true)
-      setCurrentPassword("")
-      setNewPassword("")
-      setConfirmPassword("")
-    } catch (err: unknown) {
-      console.error('Change password failed', err)
-    }
-  }
+export function SettingsPage() {
+  const {
+    currentPassword,
+    setCurrentPassword,
+    newPassword,
+    setNewPassword,
+    confirmPassword,
+    setConfirmPassword,
+    errors,
+    success,
+    isChangingPassword,
+    changePasswordError,
+    handleSubmit,
+  } = useSettingsForm()
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl">
@@ -79,43 +50,46 @@ export const SettingsPage: React.FC = () => {
             </div>
           )}
 
-          <div className="space-y-2 max-w-md">
-            <label className="text-sm font-medium text-slate-300">Current Password</label>
-            <input 
+          <div className="max-w-md">
+            <Input 
+              id="currentPassword"
               type="password" 
+              label="Current Password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               disabled={isChangingPassword}
-              className={`w-full bg-slate-950 border ${errors.currentPassword ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'} rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors`}
               placeholder="••••••••"
+              error={!!errors.currentPassword}
+              errorMessage={errors.currentPassword}
             />
-            {errors.currentPassword && <p className="text-sm text-red-500 font-medium">{errors.currentPassword}</p>}
           </div>
 
-          <div className="space-y-2 max-w-md">
-            <label className="text-sm font-medium text-slate-300">New Password</label>
-            <input 
+          <div className="max-w-md">
+            <Input 
+              id="newPassword"
               type="password" 
+              label="New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               disabled={isChangingPassword}
-              className={`w-full bg-slate-950 border ${errors.newPassword ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'} rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors`}
               placeholder="••••••••"
+              error={!!errors.newPassword}
+              errorMessage={errors.newPassword}
             />
-            {errors.newPassword && <p className="text-sm text-red-500 font-medium">{errors.newPassword}</p>}
           </div>
 
-          <div className="space-y-2 max-w-md">
-            <label className="text-sm font-medium text-slate-300">Confirm New Password</label>
-            <input 
+          <div className="max-w-md">
+            <Input 
+              id="confirmPassword"
               type="password" 
+              label="Confirm New Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               disabled={isChangingPassword}
-              className={`w-full bg-slate-950 border ${errors.confirmPassword ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'} rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors`}
               placeholder="••••••••"
+              error={!!errors.confirmPassword}
+              errorMessage={errors.confirmPassword}
             />
-            {errors.confirmPassword && <p className="text-sm text-red-500 font-medium">{errors.confirmPassword}</p>}
           </div>
 
           <div className="pt-4 border-t border-slate-800 max-w-md">
@@ -132,3 +106,4 @@ export const SettingsPage: React.FC = () => {
     </div>
   )
 }
+
