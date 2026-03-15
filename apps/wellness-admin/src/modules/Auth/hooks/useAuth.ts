@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { signIn, signOut, useSession, authClient } from "@/libs/Common/api/auth"
 import type { LoginInput } from "@wellness/shared-typescript"
 
