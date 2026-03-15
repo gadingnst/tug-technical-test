@@ -1,6 +1,7 @@
 import { Package, Plus, Pencil, Trash2 } from 'lucide-react'
 import { Button } from '@/libs/Common/ui/Button'
 import { Modal } from '@/libs/Common/ui/Modal'
+import { ModalDestructiveConfirmation } from '@/libs/Common/ui/ModalDestructiveConfirmation'
 import {
   Table,
   TableHeader,
@@ -23,9 +24,12 @@ export function WellnessPackageListPage() {
     isCreating,
     isUpdating,
     isDeleting,
+    packageToDelete,
+    setPackageToDelete,
     handleCreate,
     handleEdit,
     handleDelete,
+    confirmDelete,
     handleFormSubmit,
     formatPrice
   } = useWellnessPackageList()
@@ -140,6 +144,17 @@ export function WellnessPackageListPage() {
           onCancel={() => setIsModalOpen(false)}
         />
       </Modal>
+
+      <ModalDestructiveConfirmation
+        isOpen={!!packageToDelete}
+        onClose={() => setPackageToDelete(null)}
+        title="Delete Wellness Package"
+        description="Are you sure you want to delete this package? This action cannot be undone."
+        confirmText="Delete Package"
+        loadingText="Deleting..."
+        isLoading={isDeleting}
+        onConfirm={confirmDelete}
+      />
     </div>
   )
 }

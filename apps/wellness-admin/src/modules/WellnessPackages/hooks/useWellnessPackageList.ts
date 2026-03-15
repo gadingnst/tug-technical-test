@@ -16,6 +16,7 @@ export function useWellnessPackageList() {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState<WellnessPackage | null>(null)
+  const [packageToDelete, setPackageToDelete] = useState<number | null>(null)
 
   const handleCreate = () => {
     setSelectedPackage(null)
@@ -27,14 +28,18 @@ export function useWellnessPackageList() {
     setIsModalOpen(true)
   }
 
-  const handleDelete = async (id: number) => {
-    if (window.confirm('Are you sure you want to delete this package? This action cannot be undone.')) {
-      try {
-        await deletePackage(id)
-        toast.success('Package deleted successfully');
-      } catch (err: any) {
-        toast.error(err.message || 'Failed to delete package')
-      }
+  const handleDelete = (id: number) => {
+    setPackageToDelete(id)
+  }
+
+  const confirmDelete = async () => {
+    if (!packageToDelete) return
+    try {
+      await deletePackage(packageToDelete)
+      toast.success('Package deleted successfully')
+      setPackageToDelete(null)
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to delete package')
     }
   }
 
@@ -70,9 +75,12 @@ export function useWellnessPackageList() {
     isCreating,
     isUpdating,
     isDeleting,
+    packageToDelete,
+    setPackageToDelete,
     handleCreate,
     handleEdit,
     handleDelete,
+    confirmDelete,
     handleFormSubmit,
     formatPrice
   }

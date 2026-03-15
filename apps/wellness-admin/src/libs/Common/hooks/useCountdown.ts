@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-function useCountdown(initial: number, delayInMs = 1000) {
-  const [countdown, setCountdown] = useState(initial);
+function useCountdown(delayInMs = 1000) {
+  const [countdown, setCountdown] = useState<number | null>(null);
 
-  const resetCountdown = (count: number = initial) => setCountdown(count);
+  const resetCountdown = useCallback((count: number) => {
+    setCountdown(count);
+  }, []);
 
   useEffect(() => {
-    if (!countdown) return;
+    if (countdown === null || countdown <= 0) return;
     const interval = setInterval(() => {
-      setCountdown(prev => prev - 1);
+      setCountdown(prev => (prev !== null ? prev - 1 : null));
     }, delayInMs);
     return () => {
       clearInterval(interval);

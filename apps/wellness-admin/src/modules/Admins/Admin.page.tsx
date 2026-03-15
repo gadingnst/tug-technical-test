@@ -1,6 +1,7 @@
 import { Users, Plus, CheckCircle2, Copy, Trash2, ShieldAlert } from 'lucide-react'
 import { Button } from '@/libs/Common/ui/Button'
 import { Modal } from '@/libs/Common/ui/Modal'
+import { ModalDestructiveConfirmation } from '@/libs/Common/ui/ModalDestructiveConfirmation'
 import { AddAdminForm } from './components/AddAdminForm'
 import { useAdminList } from './hooks/useAdminList'
 import {
@@ -185,46 +186,16 @@ export function AdminPage() {
       </Modal>
 
       {/* Delete Confirmation Modal */}
-      <Modal
+      <ModalDestructiveConfirmation
         isOpen={!!adminToDelete}
-        onClose={() => !isDeleting && setAdminToDelete(null)}
+        onClose={() => setAdminToDelete(null)}
         title="Remove Administrator"
-      >
-        <div className="space-y-6">
-          <div className="flex flex-col items-center justify-center text-center space-y-4">
-            <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center border border-red-500/20">
-              <ShieldAlert className="w-8 h-8 text-red-500" />
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-medium text-white mb-2">Are you absolutely sure?</h3>
-              <p className="text-sm text-slate-400 max-w-[280px] mx-auto">
-                This action cannot be undone. This will permanently remove the administrator and delete their account from the platform.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-3 justify-end pt-4 border-t border-slate-800">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setAdminToDelete(null)}
-              disabled={isDeleting}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="button"
-              variant="default"
-              className="bg-red-600 hover:bg-red-700 text-white"
-              onClick={handleDeleteAdmin}
-              disabled={isDeleting}
-            >
-              {isDeleting ? "Removing..." : "Remove Admin"}
-            </Button>
-          </div>
-        </div>
-      </Modal>
+        description="This action cannot be undone. This will permanently remove the administrator and delete their account from the platform."
+        confirmText="Remove Admin"
+        loadingText="Removing..."
+        isLoading={isDeleting}
+        onConfirm={handleDeleteAdmin}
+      />
     </div>
   )
 }
