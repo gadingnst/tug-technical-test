@@ -8,6 +8,13 @@
       "when": 1773509664472,
       "tag": "0000_nice_dragon_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1773543320319,
+      "tag": "0001_colorful_starhawk",
+      "breakpoints": true
     }
   ]
 }

@@ -8,14 +8,17 @@ import {
   Body,
   ParseIntPipe,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { WellnessPackagesService } from './wellness-packages.service';
 import {
   CreateWellnessPackageDto,
   UpdateWellnessPackageDto,
 } from '@wellness/shared-typescript';
+import { AdminAuthGuard } from '@/guards/admin-auth.guard';
 
 @Controller('admin/packages')
+@UseGuards(AdminAuthGuard)
 export class AdminWellnessPackagesController {
   constructor(
     private readonly wellnessPackagesService: WellnessPackagesService,

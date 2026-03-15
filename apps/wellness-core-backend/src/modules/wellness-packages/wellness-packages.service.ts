@@ -2,7 +2,7 @@ import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { eq, sql } from 'drizzle-orm';
 import { DRIZZLE } from '@/database/database.module';
 import type { DrizzleDB } from '@/database/database.module';
-import { wellnessPackages } from '@/database/schema';
+import { wellnessPackages } from '@/database/schemas';
 import {
   CreateWellnessPackageInput,
   UpdateWellnessPackageInput,
