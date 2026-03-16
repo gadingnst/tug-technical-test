@@ -8,8 +8,29 @@ IMAGE_NAME="backend"
 # Navigate to the root of the repository
 ROOT_DIR=$(git rev-parse --show-toplevel)
 cd "$ROOT_DIR" || exit 1
+ENV_FILE="$ROOT_DIR/apps/backend/.env"
 
 echo "Building Docker image for $IMAGE_NAME..."
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo "Missing env file: $ENV_FILE"
+    exit 1
+fi
+
+echo "Syncing database schema and seeding wellness packages..."
+docker run --rm \
+    --env-file "$ENV_FILE" \
+    -v "$ROOT_DIR:/usr/src/app" \
+    -v backend_build_node_modules:/usr/src/app/node_modules \
+    -w /usr/src/app \
+    node:22-alpine \
+    sh -lc "npm ci && npm run drizzle:push --workspace=backend && npm run seed:wellness-packages --workspace=backend"
+
+SYNC_EXIT_CODE=$?
+if [ $SYNC_EXIT_CODE -ne 0 ]; then
+    echo "Database sync/seed failed."
+    exit $SYNC_EXIT_CODE
+fi
 
 # Create a temporary directory for the build context
 TEMP_CONTEXT=$(mktemp -d)
