@@ -22,5 +22,5 @@ During the development of the Wellness Platform, the following assumptions were 
 
 ## 5. Security
 - CORS is restricted to trusted origins defined in the configuration.
-- Sensitive data (passwords, etc.) are never returned in API payloads.
+- Sensitive data (passwords, etc.) are never returned in API payloads excepts on admin creation (on internal requests).
 ```
