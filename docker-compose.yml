@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: apps/backend/Dockerfile
+    env_file:
+      - ./apps/backend/.env
     ports:
       - "9100:9100"
     networks:
@@ -16,6 +18,8 @@ services:
     build:
       context: .
       dockerfile: apps/admin-portal/Dockerfile
+    env_file:
+      - ./apps/admin-portal/.env
     ports:
       - "3001:80" # Map host 3001 to nginx internal 80
     networks:
