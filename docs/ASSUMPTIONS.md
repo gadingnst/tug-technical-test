@@ -23,4 +23,9 @@ During the development of the Wellness Platform, the following assumptions were 
 ## 5. Security
 - CORS is restricted to trusted origins defined in the configuration.
 - Sensitive data (passwords, etc.) are never returned in API payloads excepts on admin creation (on internal requests).
+
+## 6. Architecture
+- **Modular Monorepo Architecture**: A modular approach using npm workspaces was deliberately chosen to cleanly separate concerns among the Backend (NestJS), Admin UI (React), and Mobile App (Flutter).
+- **Shared Contracts**: By extracting schemas into `packages/shared-typescript`, both the backend and frontend can rely on a single source of truth for typing and data validation, reducing sync issues.
+- **Independent Validation**: The modular structure allows each service to be developed, tested, and deployed independently while residing within a single repository for easier orchestration and unified dependency management.
 ```

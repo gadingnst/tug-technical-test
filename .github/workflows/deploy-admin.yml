@@ -1,0 +1,39 @@
+name: Deploy Admin Portal
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/admin-portal/**'
+      - 'packages/**'
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Admin Portal
+        run: npm run build:admin
+        env:
+          VITE_CORE_API_BASE_URL: ${{ secrets.VITE_CORE_API_BASE_URL }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy apps/admin-portal/dist --project-name=tug-admin-portal
+          packageManager: npm
