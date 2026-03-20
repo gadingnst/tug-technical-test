@@ -78,7 +78,10 @@ Here are some glimpses of the application:
   <img src="docs/screenshots/wellness-admin-3.png" width="800" alt="Admin Data">
 </p>
 
-### Mobile App Demo
+### Mobile App
 <p align="center">
-  <video src="docs/screenshots/wellness-app.mp4" width="800" controls="controls" type="video/mp4"></video>
+  <img src="docs/screenshots/wellness-app-ss.png" width="400" alt="Mobile App Screenshot">
+</p>
+<p align="center">
+  <a href="docs/screenshots/wellness-app.mp4">🎥 Click here to watch Mobile App Demo Video</a>
 </p>
