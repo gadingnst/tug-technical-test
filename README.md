@@ -1,6 +1,32 @@
 # Wellness Platform Monorepo
 
-Welcome to the Wellness Platform. This repository is a full-stack monorepo containing our backend services, admin dashboard, and mobile application.
+Welcome to the Wellness Platform. This repository is a full-stack monorepo containing backend services, admin dashboard, and mobile application for TUG Technical Test Purpose.
+
+## 🏛️ Core Architecture
+
+This project follows a **Modular Monorepo** pattern using **npm workspaces**. This approach ensures a clean separation of concerns while maintaining a unified development experience and shared type safety.
+
+- **Apps Layer**: Contains independent applications (`backend`, `admin-portal`, `mobile-app`).
+- **Packages Layer**: Contains shared code, most importantly `shared-typescript` which houses all Zod schemas.
+- **Shared Contracts**: We use **Zod** as the single source of truth. Schemas defined in the shared package are used for backend validation and frontend type inference, ensuring the entire stack stays in sync.
+
+## 🛠️ Technology Stack
+
+| Component | Stack |
+| :--- | :--- |
+| **Backend** | NestJS, Drizzle ORM, PostgreSQL, Better Auth |
+| **Admin Portal**| React, Vite, TanStack (Router, Query), Tailwind CSS |
+| **Mobile App** | Flutter |
+| **Shared** | Zod (Schemas & Types) |
+
+## 🐳 Docker & Orchestration
+
+The platform is fully containerized, providing a consistent environment from development to production.
+
+- **Development**: Uses `docker-compose.dev.yml` with host-volume mounting for **Hot-Reloading** without needing local Node.js dependencies.
+- **Production**: Applications can be built as isolated, lightweight images using dedicated build scripts (`build-docker-image.sh`) that create a minimal build context.
+
+---
 
 ## 📚 Documentation Hub
 
@@ -35,9 +61,24 @@ For a more robust experience (including hot-reload without local Node dependenci
 npm run docker:dev
 ```
 
-## 🛠️ Tech Stack Highlights
+## 📸 Result & Screenshots
 
-- **Backend**: NestJS, Drizzle ORM, PostgreSQL, Better Auth.
-- **Frontend**: React, TanStack (Router, Query), Vite, Tailwind CSS.
-- **Mobile**: Flutter.
-- **Shared**: Zod-based schemas for end-to-end type safety.
+Here are some glimpses of the application:
+
+### Admin Portal
+<p align="center">
+  <img src="docs/screenshots/wellness-admin-1.png" width="800" alt="Admin Dashboard">
+</p>
+<br>
+<p align="center">
+  <img src="docs/screenshots/wellness-admin-2.png" width="800" alt="Admin Features">
+</p>
+<br>
+<p align="center">
+  <img src="docs/screenshots/wellness-admin-3.png" width="800" alt="Admin Data">
+</p>
+
+### Mobile App Demo
+<p align="center">
+  <video src="docs/screenshots/wellness-app.mp4" width="800" controls="controls" type="video/mp4"></video>
+</p>
