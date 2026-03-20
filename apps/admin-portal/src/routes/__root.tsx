@@ -1,7 +1,17 @@
 import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+
 import { Sidebar } from '@/libs/Common/ui/Sidebar'
+import React from 'react'
 import { Toaster } from 'react-hot-toast'
+
+const TanStackRouterDevtools =
+  process.env.NODE_ENV === 'production'
+    ? () => null
+    : React.lazy(() =>
+      import('@tanstack/router-devtools').then((res) => ({
+        default: res.TanStackRouterDevtools,
+      })),
+    )
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -22,7 +32,9 @@ function RootComponent() {
       </main>
 
       <Toaster position="top-right" />
-      <TanStackRouterDevtools position="bottom-right" />
+      <React.Suspense fallback={null}>
+        <TanStackRouterDevtools position="bottom-right" />
+      </React.Suspense>
     </div>
   )
 }

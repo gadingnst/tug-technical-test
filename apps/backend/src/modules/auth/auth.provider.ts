@@ -41,6 +41,12 @@ export const auth = betterAuth({
     admin(),
     bearer(),
   ],
+  advanced: {
+    defaultCookieAttributes: {
+      sameSite: 'none',
+      secure: true,
+    },
+  },
 });
 
 export type Auth = typeof auth;
