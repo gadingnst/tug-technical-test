@@ -18,7 +18,5 @@
     "drizzle:push": "npm run drizzle:push --workspace=backend",
     "docker:dev": "docker-compose -f docker-compose.dev.yml up"
   },
-  "dependencies": {
-    "react-hot-toast": "^2.6.0"
-  }
+  "dependencies": {}
 }
